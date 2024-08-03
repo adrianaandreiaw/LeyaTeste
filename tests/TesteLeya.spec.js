@@ -81,3 +81,26 @@ await page.waitForTimeout(3000);
   await expect(page.locator('.icon-moon')).toBeVisible();
 });
 
+test('scenario 6', async ({ page }) => {
+
+//scenario 6
+//Ir ao menu Ebooks e validar que o livro A Princesa de Duna tem disponivel a imagem que corresponde a audiobook
+  await page.goto('https://www.leyaonline.com/pt/');
+  await page.locator(".icon-hamburguer").first().click();
+  await page.getByRole('link', { name: 'Ebooks' }).click();
+  await page.getByRole('link', { name: '-10% A Princesa de Duna' }).click();
+  await expect(page.locator('section').filter({ hasText: '-10% A Princesa de Duna BRIAN' }).locator('img').nth(1)).toBeVisible();
+});
+
+test('scenario 7', async ({ page }) => {
+
+//scenario 7
+//Verificar que no footer da página tem a secção Politica de Cookies e Politica de Privacidade
+
+await page.goto('https://www.leyaonline.com/pt/');
+await page.getByRole('button', { name: 'Close' }).click();
+await page.getByRole('link', { name: 'Política de Cookies' }).click();
+await expect(page.getByRole('heading', { name: 'Política de Cookies' })).toBeVisible();
+await page.getByRole('contentinfo').getByRole('link', { name: 'Política de Privacidade' }).click();
+await expect(page.getByRole('heading', { name: 'Política de Privacidade' })).toBeVisible();
+});
